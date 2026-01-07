@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: matSankey
+Version: 0.1.1
+Summary: Make Simple Sankey Diagrams Using matplotlib
+License: GNU General Public License v3.0
+Description-Content-Type: text/markdown
+Requires-Dist: matplotlib>=2.1.0rc1
+Requires-Dist: seaborn>=0.8.1
+Requires-Dist: numpy>=1.13.3
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: license
+Dynamic: requires-dist
+Dynamic: summary
+
+# matSankey
+
+Uses matplotlib to create simple <a href="https://en.wikipedia.org/wiki/Sankey_diagram">
+Sankey diagrams</a> flowing only from left to right.
+
