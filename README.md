@@ -1,6 +1,6 @@
 # matSankey
 
-![Version](https://img.shields.io/badge/version-0.2.0-blue)
+![Version](https://img.shields.io/badge/version-0.2.2-blue)
 ![Python](https://img.shields.io/badge/python-3.6%2B-blue)
 ![License](https://img.shields.io/badge/license-GPL%20v3-green)
 ![Dependencies](https://img.shields.io/badge/dependencies-matplotlib%20%7C%20seaborn%20%7C%20numpy-orange)
