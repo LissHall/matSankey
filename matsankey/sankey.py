@@ -53,7 +53,11 @@ def sankey(left,
            fontsize=12,
            figureName=None,
            closePlot=False,
-           ax=plt
+           ax=None,
+           stripAlpha=0.65,
+           palette="hls",
+           title=None,
+           grayStrips=False
            ):
     '''
     Make Sankey Diagram showing flow from left-->right
@@ -72,15 +76,19 @@ def sankey(left,
         leftLabels = order of the left labels in the diagram
         rightLabels = order of the right labels in the diagram
         aspect = vertical extent of the diagram in units of horizontal extent
-        rightColor = If true, each strip in the diagram will be be colored
-                    according to its left label
-
-        Version 2 new features:
-            leftLabelhide: list of left labels to hide
-            rightLabelhide: list of right labels to hide
-            ax: To specify axis to plot on
-            fontsize: is set to 12 (instead of 14)
-    Ouput:
+        rightColor = If true, each strip in the diagram will be colored
+                    according to its right label
+        leftLabelhide: list of left labels to hide
+        rightLabelhide: list of right labels to hide
+        ax: matplotlib axis to plot on, if None a new figure is created
+        fontsize: label font size (default 12)
+        figureName: if provided, saves the figure as figureName.png
+        closePlot: if True, closes the plot after saving
+        stripAlpha: transparency of the strips (default 0.65)
+        palette: seaborn color palette name for auto-coloring (default "hls")
+        title: optional title string for the diagram
+        grayStrips: if True, all strips are drawn in grey regardless of colorDict
+    Output:
         None
     '''
     if leftWeight is None:
@@ -105,9 +113,13 @@ def sankey(left,
         rightWeight = leftWeight
 
     if ax is None:
-        plt.figure()
+        fig, ax = plt.subplots()
+        ax.set_aspect('auto')
         plt.rc('text', usetex=False)
         plt.rc('font', family='serif')
+        standalone = True
+    else:
+        standalone = False
 
     # Create Dataframe
     if isinstance(left, pd.Series):
@@ -139,7 +151,6 @@ def sankey(left,
     # If no colorDict given, make one
     if colorDict is None:
         colorDict = {}
-        palette = "hls"
         colorPalette = sns.color_palette(palette, len(allLabels))
         for i, label in enumerate(allLabels):
             colorDict[label] = colorPalette[i]
@@ -176,7 +187,7 @@ def sankey(left,
             myD['bottom'] = leftWidths[leftLabels[i - 1]]['top'] + \
                 0.02 * dataFrame.leftWeight.sum()
             myD['top'] = myD['bottom'] + myD['left']
-            topEdge = myD['top']
+        topEdge = myD['top']
         leftWidths[leftLabel] = myD
 
     # Determine positions of right label patches and total widths
@@ -191,7 +202,7 @@ def sankey(left,
             myD['bottom'] = rightWidths[rightLabels[i - 1]]['top'] + \
                 0.02 * dataFrame.rightWeight.sum()
             myD['top'] = myD['bottom'] + myD['right']
-            topEdge = myD['top']
+        topEdge = myD['top']
         rightWidths[rightLabel] = myD
 
     # Total vertical extent of diagram
@@ -261,18 +272,20 @@ def sankey(left,
                 leftWidths[leftLabel]['bottom'] += ns_l[leftLabel][rightLabel]
                 rightWidths[rightLabel]['bottom'] += ns_r[leftLabel][rightLabel]
                 ax.fill_between(
-                    np.linspace(0, xMax, len(ys_d)), ys_d, ys_u, alpha=0.65,
-                    color='grey',
+                    np.linspace(0, xMax, len(ys_d)), ys_d, ys_u, alpha=stripAlpha,
+                    color='grey' if grayStrips else colorDict[labelColor],
                     ec=None,
-                    # color=colorDict[labelColor]
                 )
     # off the axis
     ax.axis('off')
 
-    if ax is None:
+    if title is not None:
+        ax.set_title(title, fontsize=fontsize + 2)
+
+    if standalone:
         plt.gcf().set_size_inches(6, 6)
 
-        if figureName != None:
+        if figureName is not None:
             plt.savefig("{}.png".format(figureName),
                         bbox_inches='tight', dpi=300)
 

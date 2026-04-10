@@ -1,5 +1,5 @@
 
-""" Make simple, pretty Sankey Diagrams """
+""" Make Simple Sankey Diagrams with Matplotlib and Seaborn"""
 
 from matsankey.sankey import sankey, PySankeyException, NullsInFrame, LabelMismatch
 
