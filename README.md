@@ -9,6 +9,8 @@ A lightweight Python package for creating [Sankey diagrams](https://en.wikipedia
 
 matSankey is designed to integrate naturally into your existing matplotlib figures — just pass an `ax` argument and the diagram renders as a subplot alongside your other plots. Note that matSankey supports **one-level flows only** (A → B). Multi-level flows (A → B → C) are not yet supported.
 
+![example](./example/toy_sankey.png)
+
 ## Installation
 
 **From PyPI:**

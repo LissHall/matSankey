@@ -1,0 +1,11 @@
+left,right,weight
+A,W,10
+A,X,4
+A,Y,2
+B,W,3
+B,X,6
+B,Y,5
+B,C,1
+C,X,2
+C,Y,4
+C,C,3

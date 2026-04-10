@@ -9,7 +9,7 @@ require = [x.strip() for x in require]
 
 setuptools.setup(
     name="matSankey",
-    version="0.2.0",
+    version="0.2.1",
     description="Make Simple Sankey Diagrams with Matplotlib and Seaborn",
     long_description=long_description,
     license='GNU General Public License v3.0',
